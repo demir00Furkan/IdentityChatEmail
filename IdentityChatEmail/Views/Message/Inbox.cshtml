@@ -1,0 +1,62 @@
+﻿@model List<InboxMessageViewModel>
+@{
+	ViewData["Title"] = "Inbox";
+	Layout = "~/Views/Shared/_MessageLayout.cshtml";
+	int count = 0;
+}
+	int count = 0;
+}
+<br />
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">Enson Gelen Mailler </div>
+					</div>
+					<div class="card-body">
+						<table class="table mt-3">
+							<thead>
+								<tr>
+									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">#</th>
+									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Gönderen</th>
+									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Konu</th>
+									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Tarih</th>
+									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Mesajı Aç</th>
+									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Durum</th>
+									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Sil</th>
+								</tr>
+							</thead>
+
+							<tbody>
+
+								@foreach (var item in Model)
+								{
+									count++;
+									<tr>
+										<td>@count</td>
+										<td> @item.SenderName @item.SenderSurname</td>
+										<td>@item.Message.Subject</td>
+										<td>@item.Message.SendDate.ToShortDateString()</td>
+										<td><a href="/Message/MessageDetail/@item.Message.MessageId" class="btn btn-warning">Mesajı Aç</a></td>
+										@if (item.Message.IsRead == true)
+										{
+											<td><a href="/Profile/ProfileIsReadToFalse/@item.Message.MessageId" class="btn btn-dark">Okunmadı Olarak İşaretle</a></td>
+										}
+										else
+										{
+											<td><a href="/Profile/ProfileIsReadToTrue/@item.Message.MessageId" class="btn btn-success">Okundu Olarak İşaretle </a></td>
+										}
+										<td><a href="/Profile/ProfileDeleteMail/@item.Message.MessageId" class="btn btn-danger">Sil</a></td>
+									</tr>
+
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

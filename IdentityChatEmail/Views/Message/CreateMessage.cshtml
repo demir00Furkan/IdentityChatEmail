@@ -1,0 +1,32 @@
+﻿@model Message
+@{
+    ViewData["Title"] = "CreateMessage";
+    Layout = "~/Views/Shared/_MessageLayout.cshtml";
+}
+
+<div class="container" style="max-width: 700px; margin: 40px auto;">
+	<div class="card">
+		<div class="card-body">
+			<form method="post">
+				<div class="form-group">
+					<input type="text" class="form-control bg-transparent" asp-for="ReciverEmail" placeholder="Kime">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control bg-transparent" asp-for="Subject" placeholder="Konu">
+				</div>
+				<div class="form-group">
+					<textarea class="textarea_editor form-control bg-light" rows="15" asp-for="MessageDetail" placeholder="Mesaj..."></textarea>
+				</div>
+
+				<div class="text-left m-t-15">
+					<button class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" type="submit" name="action" value="send">
+						<i class="fa fa-paper-plane m-r-5"></i> Gönder
+					</button>
+					<button class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" type="submit" name="action" value="cancel" >
+						<i class="ti-close m-r-5 f-s-12"></i> Vazgeç
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

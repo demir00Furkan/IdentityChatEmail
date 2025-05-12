@@ -1,0 +1,41 @@
+﻿@model MessageDetailViewModel
+
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+    Layout = "~/Views/Shared/_MessageLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow rounded-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📬 Mesaj Detayı</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label" style="font-family: 'Arial'; color: #2c3e50; font-weight: bold;">Gönderen:</label>
+                        <p class="form-control-plaintext">@Model.SenderName @Model.SenderSurname <br /> @Model.Message.SenderEmail</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-family: 'Arial'; color: #2c3e50; font-weight: bold;">Alıcı:</label>
+                        <p class="form-control-plaintext">@Model.Message.ReciverEmail</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-family: 'Arial'; color: #2c3e50; font-weight: bold;">Tarih:</label>
+                        <p class="form-control-plaintext">@Model.Message.SendDate.ToString("dd.MM.yyyy HH:mm")</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" style="font-family: 'Arial'; color: #2c3e50; font-weight: bold;">Mesaj:</label>
+                        <div class="p-3 border rounded bg-light" style="white-space: pre-wrap;">
+                            @Model.Message.MessageDetail
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-end bg-white border-top-0">
+                    <a asp-action="Inbox" class="btn btn-secondary">📥 Geri Dön</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

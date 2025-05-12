@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityChatEmail", "IdentityChatEmail\IdentityChatEmail.csproj", "{F68EE4F6-2D48-49AD-ACDD-31726675C6F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F68EE4F6-2D48-49AD-ACDD-31726675C6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F68EE4F6-2D48-49AD-ACDD-31726675C6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F68EE4F6-2D48-49AD-ACDD-31726675C6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F68EE4F6-2D48-49AD-ACDD-31726675C6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC00662F-7847-4739-8CDA-10A1C4173D5C}
+	EndGlobalSection
+EndGlobal
