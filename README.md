@@ -59,10 +59,16 @@ Kullanıcılar gönderdikleri mesajları bu ekranda görebilirler.
 
 ![Sendbox](https://github.com/user-attachments/assets/128c11bb-2a18-426a-820f-a6b5efcfc1a6)
 
+---
+
+### 7. Mesaj Detay
+Mesajı aç butonuna tıklandıktan sonra açılan bu sayfa giriş yapan kullanıcının tüm maillerini görüntülemektedir.
+
+![image](https://github.com/user-attachments/assets/6cf42d52-ac22-4204-9897-6e6c54d3eca4)
 
 ---
 
-### 7. Mesaj Oluşturma (Create Message)
+### 8. Mesaj Oluşturma (Create Message)
 Kullanıcılar yeni mesaj oluşturup gönderebilirler.
 
 ![CreateMessage](https://github.com/user-attachments/assets/7757d2e7-9343-4c94-958c-4c3297868c8e)
