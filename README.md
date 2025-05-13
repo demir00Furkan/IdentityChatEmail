@@ -29,7 +29,8 @@ Kullanıcılar mevcut hesaplarıyla sisteme giriş yapabilirler.
 
 
 ### 3. Profil Detayları (Profile Detail)
-Kullanıcılar profil bilgilerini görüntüleyebilir ve güncelleyebilirler. Bu sayfa aynı zamanda ana sayfa olarakta kullanılmaktadır.
+Kullanıcılar profil bilgilerini görüntüleyebilir ve güncelleyebilirler.Burada Son Gelen Mailler kısmında son 3 mesaj yer almaktadır.
+Aynı zamanda burası ana sayfa olarakta kullanılmaktadır.
 
 ![ProfileDetail](https://github.com/user-attachments/assets/2256488e-52eb-454c-8030-0583483402ec)
 
