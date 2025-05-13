@@ -41,22 +41,23 @@ namespace IdentityChatEmail.Controllers
                 };
             }).ToList();
 
-            var model = new ProfileDetailViewModel
+            var viewModel = new ProfileDetailViewModel
             {
+                Name = user.Name,
+                Surname = user.Surname,
+                Username = user.UserName,
+                Email = user.Email,
                 InboxMessages = inboxList,
-                User = new UserUpdateViewModel
-                {
-                    Name = user.Name,
-                    Surname = user.Surname,
-                    Username = user.UserName,
-                    Email = user.Email
-                }
+                ProfileImageUrl = user.ProfileImageUrl
             };
-
-            ViewBag.InboxCountFalse = _context.Messages.Count(x => !x.IsRead);
-
-            return View(model);
+            var deger = _context.Messages.Where(x => x.ReciverEmail == user.Email).OrderByDescending(x => x.SendDate).ToList();
+            ViewBag.InboxCountFalse = deger.Where(x => x.IsRead == false).Count();
+            ViewBag.ProfilePhoto= user.ProfileImageUrl;
+            ViewBag.name = user.Name;
+            ViewBag.surname = user.Surname;
+            return View(viewModel);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> ProfileDetail(ProfileDetailViewModel model)
@@ -65,7 +66,7 @@ namespace IdentityChatEmail.Controllers
 
             if (!ModelState.IsValid)
             {
-                // Inbox'ı tekrar yükle (POST sonrası sayfa geri dönecekse)
+                
                 var messages = _context.Messages
                     .Where(x => x.ReciverEmail == user.Email)
                     .OrderByDescending(x => x.SendDate)
@@ -83,19 +84,20 @@ namespace IdentityChatEmail.Controllers
                     };
                 }).ToList();
 
-                ViewBag.InboxCountFalse = _context.Messages.Count(x => !x.IsRead);
+                
                 return View(model);
             }
 
-            user.Name = model.User.Name;
-            user.Surname = model.User.Surname;
-            user.UserName = model.User.Username;
-            user.Email = model.User.Email;
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+            user.UserName = model.Username;
+            user.Email = model.Email;
+           
 
-            if (!string.IsNullOrEmpty(model.User.Password))
+            if (!string.IsNullOrEmpty(model.Password))
             {
                 var passwordHasher = new PasswordHasher<AppUser>();
-                user.PasswordHash = passwordHasher.HashPassword(user, model.User.Password);
+                user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
             }
 
             var result = await _UserManager.UpdateAsync(user);
@@ -134,6 +136,39 @@ namespace IdentityChatEmail.Controllers
             _context.Messages.Remove(values);
             _context.SaveChanges();
             return RedirectToAction("ProfileDetail", "Profile");
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> UpdateUserInfo(AppUser model)
+        {
+            var user = await _UserManager.FindByNameAsync(User.Identity.Name);
+            if (user == null) return NotFound();
+
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+            user.Email = model.Email;
+            user.UserName = model.UserName;
+            user.ProfileImageUrl = model.ProfileImageUrl;
+
+            if (!string.IsNullOrWhiteSpace(model.PasswordHash))
+            {
+                user.PasswordHash = _UserManager.PasswordHasher.HashPassword(user, model.PasswordHash);
+            }
+
+            var result = await _UserManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ProfileDetail");
+            }
+
+          
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View("ProfileDetail"); // Modeli tekrar doldurman gerekebilir
         }
 
     }

@@ -4,8 +4,7 @@
 	Layout = "~/Views/Shared/_MessageLayout.cshtml";
 	int count = 0;
 }
-	int count = 0;
-}
+
 <br />
 <div class="content">
 	<div class="container-fluid">
@@ -13,7 +12,8 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-header">
-						<div class="card-title">Enson Gelen Mailler </div>
+						<div class="card-title">Gelen Mailler </div>
+						<input type="text" id="mailSearchInput" class="form-control mt-2" placeholder="Mail ara...">
 					</div>
 					<div class="card-body">
 						<table class="table mt-3">
@@ -25,7 +25,6 @@
 									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Tarih</th>
 									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Mesajı Aç</th>
 									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Durum</th>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Sil</th>
 								</tr>
 							</thead>
 
@@ -34,24 +33,31 @@
 								@foreach (var item in Model)
 								{
 									count++;
-									<tr>
+									<tr data-sender="@($"{item.SenderName} {item.SenderSurname}")"
+										data-subject="@item.Message.Subject"
+										data-body="@item.Message.MessageDetail">
 										<td>@count</td>
-										<td> @item.SenderName @item.SenderSurname</td>
+										<td>@item.SenderName @item.SenderSurname</td>
 										<td>@item.Message.Subject</td>
 										<td>@item.Message.SendDate.ToShortDateString()</td>
-										<td><a href="/Message/MessageDetail/@item.Message.MessageId" class="btn btn-warning">Mesajı Aç</a></td>
+										<td>
+											<a href="/Message/MessageDetail/@item.Message.MessageId" class="btn btn-warning">Mesajı Aç</a>
+										</td>
 										@if (item.Message.IsRead == true)
 										{
-											<td><a href="/Profile/ProfileIsReadToFalse/@item.Message.MessageId" class="btn btn-dark">Okunmadı Olarak İşaretle</a></td>
+											<td>
+												<a href="/Message/InboxIsReadToFalse/@item.Message.MessageId" class="btn btn-success">Okunmadı Olarak İşaretle</a>
+											</td>
 										}
 										else
 										{
-											<td><a href="/Profile/ProfileIsReadToTrue/@item.Message.MessageId" class="btn btn-success">Okundu Olarak İşaretle </a></td>
+											<td>
+												<a href="/Message/InboxIsReadToTrue/@item.Message.MessageId" class="btn btn-dark">Okundu Olarak İşaretle</a>
+											</td>
 										}
-										<td><a href="/Profile/ProfileDeleteMail/@item.Message.MessageId" class="btn btn-danger">Sil</a></td>
 									</tr>
-
 								}
+
 							</tbody>
 						</table>
 					</div>
@@ -60,3 +66,21 @@
 		</div>
 	</div>
 </div>
+<script>
+	document.getElementById('mailSearchInput').addEventListener('keyup', function () {
+		var filter = this.value.toLowerCase();
+		var rows = document.querySelectorAll('table tbody tr');
+
+		rows.forEach(function (row) {
+			var sender = row.getAttribute('data-sender').toLowerCase();
+			var subject = row.getAttribute('data-subject').toLowerCase();
+			var body = row.getAttribute('data-body').toLowerCase();
+
+			if (sender.includes(filter) || subject.includes(filter) || body.includes(filter)) {
+				row.style.display = '';
+			} else {
+				row.style.display = 'none';
+			}
+		});
+	});
+</script>

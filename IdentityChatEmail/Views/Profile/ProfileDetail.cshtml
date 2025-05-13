@@ -4,98 +4,66 @@
 	Layout = "~/Views/Shared/_MessageLayout.cshtml";
 	int count = 0;
 }
-<br />
-<div class="content">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<div class="card-title">Enson Gelen Mailler </div>
-					</div>
-					<div class="card-body">
-						<table class="table mt-3">
-							<thead>
-								<tr>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">#</th>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Gönderen</th>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Konu</th>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Tarih</th>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Mesajı Aç</th>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Durum</th>
-									<th scope="col" style="font-family: Arial; color: #333; font-weight: bold;">Sil</th>
-								</tr>
-							</thead>
 
-							<tbody>
+<h3><b>Son Gelen Mailler</b></h3>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Gönderen</th>
+            <th>Konu</th>
+            <th>Tarih</th>
+            <th>Mesajı Aç</th>
+            <th>Durum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.InboxMessages.Count; i++)
+        {
 
-								@foreach (var item in Model.InboxMessages)
-								{
-									count++;
-									<tr>
-										<td>@count</td>
-										<td> @item.SenderName @item.SenderSurname</td>
-										<td>@item.Message.Subject</td>
-										<td>@item.Message.SendDate.ToShortDateString()</td>
-										<td><a href="/Message/MessageDetail/@item.Message.MessageId" class="btn btn-warning">Mesajı Aç</a></td>
-										@if (item.Message.IsRead == true)
-										{
-											<td><a href="/Profile/ProfileIsReadToFalse/@item.Message.MessageId" class="btn btn-dark">Okunmadı Olarak İşaretle</a></td>
-										}
-										else
-										{
-											<td><a href="/Profile/ProfileIsReadToTrue/@item.Message.MessageId" class="btn btn-success">Okundu Olarak İşaretle </a></td>
-										}
-										<td><a href="/Profile/ProfileDeleteMail/@item.Message.MessageId" class="btn btn-danger">Sil</a></td>
-									</tr>
+            var item = Model.InboxMessages[i];
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@item.SenderName @item.SenderSurname</td>
+                <td>@item.Message.Subject</td>
+                <td>@item.Message.SendDate.ToShortDateString()</td>
+                <td><a href="/Message/MessageDetail/@item.Message.MessageId" class="btn btn-warning">Mesajı Aç</a></td>
+                <td>
+                    @if (item.Message.IsRead)
+                    {
+                        <a href="/Profile/ProfileIsReadToFalse/@item.Message.MessageId" class="btn btn-success">Okunmadı Olarak İşaretle</a>
+                    }
+                    else
+                    {
+                        <a href="/Profile/ProfileIsReadToTrue/@item.Message.MessageId" class="btn btn-dark">Okundu Olarak İşaretle</a>
+                    }
+                </td>
+            </tr>
 
-								}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="content">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<div class="card-title">Kullanıcı Bilgilerini Güncelle</div>
-					</div>
-
-					<div class="card-body">
-						<form class="mt-5 mb-5 login-input" method="post">
-							<div class="form-group">
-								<label><b>Adınız</b></label>
-								<input type="text" class="form-control" placeholder="Adınız" asp-for="User.Name" required>
-							</div>
-							<div class="form-group">
-								<label><b>Soyadınız</b></label>
-								<input type="text" class="form-control" placeholder="Soyadınız " asp-for="User.Surname" required>
-							</div>
-							<div class="form-group">
-								<label><b>Kullanıcı Adınız</b></label>
-								<input type="text" class="form-control" placeholder="Kullanıcı Adınız " asp-for="User.Username" required>
-							</div>
-							<div class="form-group">
-								<label><b>Mail Adresiniz</b></label>
-								<input type="email" class="form-control" placeholder="Email Adresiniz" asp-for="User.Email" required>
-							</div>
-							<div class="form-group">
-								<label><b>Şifreniz</b></label>
-								<input type="password" class="form-control" placeholder="Şifreniz" asp-for="User.Password" required>
-							</div>
-							<div class="text-danger" asp-validation-summary="ModelOnly"></div>
-							<button class="btn login-form__btn submit w-100">Güncelle</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+        }
+    </tbody>
+    <h4>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h4>
+</table>
+<h3><b>Kullanıcı Bilgilerini Güncelle</b></h3>
+<h4>-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</h4>
+<form asp-action="UpdateUserInfo" asp-controller="Profile" method="post">
+    <label><b>Adınız</b></label>
+    <input asp-for="Name" class="form-control" />
+    <br />
+    <label><b>Soyadınız</b></label>
+    <input asp-for="Surname" class="form-control" />
+    <br />
+    <label><b>Kullanıcı Adınız</b></label>
+    <input asp-for="Username" class="form-control" />
+    <br />
+    <label><b>Mail Adresiniz</b></label>
+    <input asp-for="Email" class="form-control" />
+    <br />
+    <label><b>Profil Fotoğrafınız (Url) </b></label>
+    <input asp-for="ProfileImageUrl" class="form-control" />
+    <br />
+    <label><b>Yeni Şifreniz</b></label>
+    <input type="text" name="PasswordHash" class="form-control" placeholder="Yeni Şifre" />
+    <br />
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>

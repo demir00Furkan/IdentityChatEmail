@@ -28,7 +28,8 @@ namespace IdentityChatEmailNightt.Controllers
                 Name = model.Name,
                 Email = model.Email,
                 Surname = model.Surname,
-                UserName = model.Username
+                UserName = model.Username,
+                ProfileImageUrl = model.ProfileImageUrl
             };
             var result = await _userManager.CreateAsync(appUser, model.Password);
             if (result.Succeeded)

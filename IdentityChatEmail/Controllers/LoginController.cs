@@ -28,6 +28,7 @@ namespace IdentityChatEmail.Controllers
                 return RedirectToAction("ProfileDetail", "Profile");
             }
             return View();
+
         }
     }
 }

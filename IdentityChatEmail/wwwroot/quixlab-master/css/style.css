@@ -11765,7 +11765,7 @@ table.dataTable thead .sorting::after {
   .faq-tab-panel .nav-pills .nav-link:not(:last-child) {
     margin-bottom: 1rem; }
   .faq-tab-panel .nav-pills .nav-link.active {
-    background-color: #7571f9;
+    background-color: rgba(120, 130, 140, 0.13);
     color: #fff !important; }
     .faq-tab-panel .nav-pills .nav-link.active h4, .faq-tab-panel .nav-pills .nav-link.active p, .faq-tab-panel .nav-pills .nav-link.active i {
       color: #fff !important; }
